@@ -6,3 +6,4 @@ cache:
     - $HOME/.m2
 script:
   - mvn test --batch-mode
+  - cat target/site/jacoco/jacoco.csv | column -t -s,
