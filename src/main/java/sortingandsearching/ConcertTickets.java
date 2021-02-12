@@ -37,6 +37,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Arrays;
 import java.util.Map;
+import java.util.StringTokenizer;
 import java.util.TreeMap;
 
 
@@ -75,22 +76,28 @@ public class ConcertTickets {
     public static void main(String[] args) throws IOException {
         int[] prices;
         int[] budgets;
+        StringTokenizer st;
+        int i;
         try (BufferedReader br = new BufferedReader(new InputStreamReader(System.in))) {
             String line = br.readLine();
-            String[] tokens = line.split("\\s+");
-            int n = Integer.parseInt(tokens[0]);
-            int m = Integer.parseInt(tokens[1]);
+            st = new StringTokenizer(line);
+            int n = Integer.parseInt(st.nextToken());
+            int m = Integer.parseInt(st.nextToken());
             prices = new int[n];
             budgets = new int[m];
             line = br.readLine();
-            tokens = line.split("\\s+");
-            for (int i = 0; i < n; i++) {
-                prices[i] = Integer.parseInt(tokens[i]);
+            st = new StringTokenizer(line);
+            i = 0;
+            while (st.hasMoreTokens()) {
+                prices[i] = Integer.parseInt(st.nextToken());
+                i++;
             }
             line = br.readLine();
-            tokens = line.split("\\s+");
-            for (int i = 0; i < m; i++) {
-                budgets[i] = Integer.parseInt(tokens[i]);
+            st = new StringTokenizer(line);
+            i = 0;
+            while (st.hasMoreTokens()) {
+                budgets[i] = Integer.parseInt(st.nextToken());
+                i++;
             }
         }
         for (int pmt : solve(prices, budgets)) {
