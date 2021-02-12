@@ -32,6 +32,9 @@ Space O(N): store the ticket prices in a SortedMap where K is the price and V is
 */
 package sortingandsearching;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -41,25 +44,36 @@ import java.util.TreeMap;
 
 
 public class ConcertTickets {
+    private static final Logger log = LoggerFactory.getLogger(ConcertTickets.class);
+
     static int[] solve(int[] prices, int[] budgets) {
+        log.debug("prices={}, budgets={}", prices, budgets);
         int[] res = new int[budgets.length];
         Arrays.fill(res, -1);
         TreeMap<Integer, Integer> sortedPrices = new TreeMap<>();
         Integer count;
-        for (int p: prices) {
+        for (int p : prices) {
             count = sortedPrices.get(p);
             if (count == null) {
-                count = 1;
-            } else {
-                count++;
+                count = 0;
             }
-            sortedPrices.put(p, count);
+            sortedPrices.put(p, ++count);
         }
         Map.Entry<Integer, Integer> entry;
+        int p;
         for (int i = 0; i < budgets.length; i++) {
             entry = sortedPrices.floorEntry(budgets[i]);
-            if (entry != null) {
-                res[i] = entry.getValue();
+            log.debug("budget={}, entry={}, sortedPrices={}", budgets[i], entry, sortedPrices);
+            if (entry == null) {
+                continue;
+            }
+            p = entry.getKey();
+            count = entry.getValue();
+            res[i] = p;
+            if (--count == 0) {
+                sortedPrices.remove(p);
+            } else {
+                sortedPrices.put(p, count);
             }
         }
         return res;
@@ -86,7 +100,7 @@ public class ConcertTickets {
                 budgets[i] = Integer.parseInt(tokens[i]);
             }
         }
-        for (int pmt: solve(prices, budgets)) {
+        for (int pmt : solve(prices, budgets)) {
             System.out.println(pmt);
         }
     }

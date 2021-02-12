@@ -20,8 +20,8 @@ public class DiceCombinationsTest {
             }
         }
 
-        @DataProvider(name = "data")
-        Object[] data() {
+        @DataProvider(name = "test_case_1")
+        Object[] test_case_1() {
             return new TestCase[]{
                     new TestCase(1, 1),
                     new TestCase(2, 2),
@@ -36,7 +36,7 @@ public class DiceCombinationsTest {
         }
     }
 
-    @Test(dataProvider = "data", dataProviderClass = StaticProvider.class)
+    @Test(dataProvider = "test_case_1", dataProviderClass = StaticProvider.class)
     public void test_case_1(StaticProvider.TestCase tc) {
         Assert.assertEquals(DiceCombinations.solve(tc.n), tc.expected);
     }
